@@ -1,4 +1,5 @@
 from Move import Move
+from copy import deepcopy
 
 class Board:
 	knight = 'k'
@@ -13,6 +14,11 @@ class Board:
 				self.__board_state[(x, y)] = self.empty
 		self.__board_state[start] = self.knight
 	
+	def copy(self):
+		other = Board(self.__max)
+		other.__board_state = deepcopy(self.__board_state)
+		return other
+	
 	def get_knight_pos(self):
 		for k, v in self.__board_state.iteritems():
 			if v == self.knight:
@@ -25,6 +31,7 @@ class Board:
 		self.__board_state[(x, y)] = self.visited
 		new_pos = (x + move.x, y + move.y)
 		self.__board_state[new_pos] = self.knight
+		return self
 	
 	def is_valid_move(self, move):
 		(x, y) = self.get_knight_pos()
